@@ -1,0 +1,3 @@
+[submodule "p5.mapper"]
+	path = p5.mapper
+	url = https://github.com/jdeboi/p5.mapper.git
