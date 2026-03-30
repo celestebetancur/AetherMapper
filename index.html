@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Aether Mapper</title>
+	<meta name="description" content="Free mapping web app for live coding visuals with Hydra and P5.js">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div id="welcomeMenu">
+		<h1>Aether Mapper</h1>
+		<p>Free mapping web app for live coding visuals with Hydra, P5.js and p5.mapper made by
+			<br>Celeste Betancur Gutiérrez
+		</p>
+		<button id="enterAppBtn" class="primary"
+			onclick="document.getElementById('welcomeMenu').style.display='none';">Start Mapping</button>
+	</div>
+
+	<form id="uploadForm" style="display: none;">
+		<input type="file" id="fileInput" name="file" accept=".wav, .aiff, image/png, image/jpeg, video/webm, video/mp4"
+			multiple>
+		<button type="submit" id="submitUpload">Upload</button>
+	</form>
+	<ul id="fileList" style="display: none;"></ul>
+
+	<div id="shapeMenu">
+		<h3>Create New Shape</h3>
+		<label>Type:
+			<select id="shapeType" onchange="
+				document.getElementById('polyPointsWrapper').style.display = this.value === 'POLY' ? 'block' : 'none';
+			">
+				<option value="POLY">Polygon</option>
+				<option value="TRI">Triangle</option>
+				<option value="QUAD">Quad</option>
+				<option value="BEZ">Bezier</option>
+			</select>
+		</label>
+		<div id="polyPointsWrapper">
+			<label>Points:
+				<input type="number" id="polyPoints" value="6" min="3" max="20" />
+			</label>
+		</div>
+		<div class="menu-actions">
+			<button id="cancelShapeBtn">Cancel</button>
+			<button id="createShapeBtn" class="primary">Create</button>
+		</div>
+	</div>
+
+	<div id="codeLayer"
+		style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:500;"></div>
+
+	<div id="shortcutHelper">
+		<h3>Keyboard Shortcuts</h3>
+		<ul>
+			<li><strong>Backspace</strong>: Delete char before cursor</li>
+			<li><strong>Arrow Keys</strong>: Navigate text editing cursor</li>
+			<li><strong>Enter</strong>: Insert newline in code</li>
+			<li><strong>Delete</strong>: Remove active shape</li>
+			<li><strong>Tab</strong>: Cycle active shape</li>
+			<li class="group-start"><strong>Ctrl+C</strong>: Toggle calibration and move shapes</li>
+			<li><strong>Ctrl+F</strong>: Toggle fullscreen</li>
+			<li><strong>Ctrl+L</strong>: Load map & hydra code configuration</li>
+			<li><strong>Ctrl+M</strong>: Save map & hydra code configuration</li>
+			<li class="group-start"><strong>Ctrl+Shift+E</strong>: Execute shape Hydra code</li>
+			<li><strong>Ctrl+Shift+S</strong>: Toggle Hydra code visibility</li>
+			<li><strong>Ctrl+Shift+M</strong>: Create new Hydra shape map</li>
+			<li><strong>Ctrl+Shift+K</strong>: Open file upload (Audio/Video/Image)</li>
+			<li><strong>Ctrl+Shift+I</strong>: Toggle loaded media</li>
+		</ul>
+	</div>
+
+	<button id="shortcutBtn" onclick="
+		const helper = document.getElementById('shortcutHelper');
+		helper.style.display = helper.style.display === 'block' ? 'none' : 'block';
+	">?</button>
+
+	<div id="mediaHud"></div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+	<script src="https://unpkg.com/hydra-synth"></script>
+	<script src="p5.mapper/dist/p5.mapper.min.js"></script>
+	<script src="loadMedia.js"></script>
+	<script src="sketch.js"></script>
+</body>
+
+</html>
